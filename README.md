@@ -1,31 +1,42 @@
-# spfcheck
+# mailcheck
 
-Tool for checking the existence of a SPF record for domain names.
+Tool for checking the existence of MX, SPF and DMARC records for domain names.
 
 ## Prerequisites
 
-* [Go](https://golang.org/)
+- [Go](https://golang.org/)
 
 ## Installation
 
 ```
-$ go get -v github.com/dstotijn/spfcheck
+$ go get -v github.com/dstotijn/mailcheck
 ```
 
 ## Usage
 
 Outputting results to stdout:
+
 ```
-$ spfcheck < domains.txt
+$ mailcheck < domains.txt
 ```
 
 Outputting results to file:
+
 ```
-$ spfcheck < domains.txt > output.csv
+$ mailcheck < domains.txt > output.csv
 ```
 
-### Reading results
+### Reading result output
 
-Each line has 3 comma separated fields, first one is the domain name, second
-is the result of the SPF check (`true` or `false`) and the last field has the
-SPF record contents.
+The first line has CSV-headers:
+
+`domain,hasMX,hasSPF,spfRecord,hasDMARC,dmarcRecord`
+
+Each subsequent line has 6 comma separated fields:
+
+- `domain`: Domain name
+- `hasMX`: Domain has at least one MX record? (`true` or `false`)
+- `hasSPF`: Domain has SPF record? (`true` or `false`)
+- `spfRecord`: SPF record contents
+- `hasDMARC`: Domain has DMARC record? (`true` or `false`)
+- `dmarcRecord`: DMARC record contents
