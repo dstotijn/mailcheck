@@ -53,9 +53,12 @@ func checkDomain(domain string) {
 		log.Printf("Error: %v\n", err)
 	}
 
-	if len(dmarcRecords) > 0 {
-		hasDMARC = true
-		dmarcRecord = dmarcRecords[0]
+	for _, record := range dmarcRecords {
+		if strings.HasPrefix(record, "v=DMARC1") {
+			hasDMARC = true
+			dmarcRecord = record
+			break
+		}
 	}
 
 	fmt.Printf("%v,%v,%v,%v,%v,%v\n", domain, hasMX, hasSPF, spfRecord, hasDMARC, dmarcRecord)
